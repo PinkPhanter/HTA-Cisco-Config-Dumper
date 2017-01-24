@@ -1,0 +1,312 @@
+<html>
+<!-- Mathew Bray (mathew.bray@gmail.com)-->
+
+<!-- Anything past IE8 doesn't work well with HTA or VBScript -->
+ <meta http-equiv="x-ua-compatible" content="ie=8">
+ 
+
+<script type="text/javascript">
+    window.resizeTo(390,380);
+</script>
+
+<head>
+    <title>Cisco Config Dumper</title>
+    <HTA:APPLICATION
+        ID="ciscoconfigdumper"
+        SINGLEINSTANCE="yes"
+        APPLICATIONNAME="results-ciscoconfigdumper"
+        BORDER="thin"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        MAXIMIZEBUTTON="no"
+        MINIMIZEBUTTON="yes"
+        SCROLL="no"
+        SHOWINTASKBAR="yes"
+        SYSMENU="yes"
+        WINDOWSTATE="normal"
+        ICON="poo.ico" />
+			
+</head>
+
+<SCRIPT LANGUAGE="VBScript">
+
+'***************************************************************************************************
+'--- Set the Directory
+Set pathObjShell = CreateObject("Wscript.Shell")	
+Set envvars = pathObjShell.Environment("SYSTEM")
+appdirectory = envvars("LAUNCHPADPATH")
+
+'***************************************************************************************************
+
+
+
+
+'***************************************************************************************************
+'--- REGENERATE THE DEVICE LIST
+Sub generatedevicelist
+	Set objShell = CreateObject("Wscript.Shell")	
+	Set vars = objShell.Environment("SYSTEM")
+
+	COMMAND = appdirectory & "plink\Start-Ping-IPrange-Script.ps1"
+	objShell.Run "powershell.exe  -executionpolicy bypass " & COMMAND, 1
+End Sub
+
+
+'***************************************************************************************************
+'--- GET CONFIGS
+Sub getconfigs
+	Set objShell = CreateObject("Wscript.Shell")	
+	Set vars = objShell.Environment("SYSTEM")
+	COMMAND = appdirectory & "plink\configdumper.ps1"
+	objShell.Run "powershell.exe  -executionpolicy bypass " & COMMAND, 1
+End Sub
+
+
+
+'***************************************************************************************************
+'--- OPEN LIST
+Sub openalllist
+	Set objShell = CreateObject("Wscript.Shell")	
+	Set vars = objShell.Environment("SYSTEM")
+	COMMAND = "notepad.exe " & appdirectory & "plink\alldevices.txt"
+	objShell.Run COMMAND, 1
+End Sub
+
+'***************************************************************************************************
+'--- OPEN OUTPUT FOLDER
+Sub openoutputfolder
+	Set objShell = CreateObject("Wscript.Shell")	
+	Set vars = objShell.Environment("SYSTEM")
+	COMMAND = "explorer.exe %UserProfile%\Desktop\Cisco-Config-Dumper-Output\"
+	objShell.Run COMMAND, 1
+End Sub
+
+</script>
+
+<style>
+#wrapper {
+    margin: 0 auto;
+    overflow:hidden;
+	margin-top: -8px;
+	margin-bottom: -8px;
+	margin-left: -8px;
+	margin-right: -8px;	
+	filter:progid:DXImageTransform.Microsoft.Gradient 
+	(GradientType=0, StartColorStr='#d0a888', EndColorStr='#663300');
+}
+
+.buttonOrange {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f0c911), color-stop(1, #f2ab1e));
+	background:-moz-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-webkit-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-o-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-ms-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:linear-gradient(to bottom, #f0c911 5%, #f2ab1e 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0c911', endColorstr='#f2ab1e',GradientType=0);
+	background-color:#f0c911;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #e65f44;
+	display:inline-block;
+	cursor:pointer;
+	color:#c92200;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ded17c;
+}
+.buttonOrange:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f2ab1e), color-stop(1, #f0c911));
+	background:-moz-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-webkit-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-o-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-ms-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:linear-gradient(to bottom, #f2ab1e 5%, #f0c911 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2ab1e', endColorstr='#f0c911',GradientType=0);
+	background-color:#f2ab1e;
+}
+.buttonOrange:active {
+	position:relative;
+	top:1px;
+}
+
+.buttonGreen {
+	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+	box-shadow:inset 0px 1px 0px 0px #caefab;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811));
+	background:-moz-linear-gradient(top, #77d42a 5%, #5cb811 100%);
+	background:-webkit-linear-gradient(top, #77d42a 5%, #5cb811 100%);
+	background:-o-linear-gradient(top, #77d42a 5%, #5cb811 100%);
+	background:-ms-linear-gradient(top, #77d42a 5%, #5cb811 100%);
+	background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811',GradientType=0);
+	background-color:#77d42a;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:1px;
+	border:15px solid #268a16;
+	display:inline-block;
+	cursor:pointer;
+	color:#306108;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:20px 48px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #aade7c;
+}
+.buttonGreen:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a));
+	background:-moz-linear-gradient(top, #5cb811 5%, #77d42a 100%);
+	background:-webkit-linear-gradient(top, #5cb811 5%, #77d42a 100%);
+	background:-o-linear-gradient(top, #5cb811 5%, #77d42a 100%);
+	background:-ms-linear-gradient(top, #5cb811 5%, #77d42a 100%);
+	background:linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a',GradientType=0);
+	background-color:#5cb811;
+}
+.buttonGreen:active {
+	position:relative;
+	top:1px;
+}
+
+.buttonCreme {
+	-moz-box-shadow: 0px 1px 0px 0px #1c1b18;
+	-webkit-box-shadow: 0px 1px 0px 0px #1c1b18;
+	box-shadow: 0px 1px 0px 0px #1c1b18;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #eae0c2), color-stop(1, #ccc2a6));
+	background:-moz-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-webkit-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-o-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-ms-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae0c2', endColorstr='#ccc2a6',GradientType=0);
+	background-color:#eae0c2;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	border:2px solid #333029;
+	display:inline-block;
+	cursor:pointer;
+	color:#505739;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:5px 5px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.buttonCreme:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
+	background:-moz-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-webkit-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-o-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-ms-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccc2a6', endColorstr='#eae0c2',GradientType=0);
+	background-color:#ccc2a6;
+}
+.buttonCreme:active {
+	position:relative;
+	top:1px;
+}
+
+.buttonBlue {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #019ad2));
+	background:-moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#019ad2',GradientType=0);
+	background-color:#33bdef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.buttonBlue:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
+	background-color:#019ad2;
+}
+.buttonBlue:active {
+	position:relative;
+	top:1px;
+}
+
+
+
+</style>
+<div id="wrapper">
+<body STYLE="font:12pt courier new;">
+	<center>
+		<table>
+			<tr>
+				<td>
+					<center>							
+					<div style="line-height:20%;"><br></div>
+					<font size="2">
+					<i> This app will retrieve the config of all devices in the device list.  </i> </font><br>
+					<div style="line-height:20%;"><br></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<center>
+					<!-- Generate EBN List -->
+						<a href="#"  onclick="vbscript:generatedevicelist" class="buttonBlue">Re-generate the Device list!</a>
+						<div style="line-height:100%;"><br></div>
+					</center>
+				</td>
+			</tr>
+			<tr>
+
+				<td><center>
+					<div style="line-height:20%;"><br></div>
+					<a href="#"  onclick="vbscript:getconfigs" class="buttonGreen">Get Configs!!</a>
+					<div style="line-height:40%;"><br></div>
+					<!-- Multiple instances of the same seem to work fine. --><!--
+					<input type="button" onclick="vbscript:plink2" value="Run Second Instance of Plink!" name="plinkbutton2" style="background-color:#5cb811; color:#fff;">
+					-->
+					<div style="line-height:80%;"><br></div>
+					<a href="#" onclick="vbscript:openoutputfolder"class="buttonCreme">Open Output Folder...</a>
+					<hr>
+					
+					<div style="line-height:20%;"><br></div>
+					<br>
+					<a href="#" onclick="vbscript:openalllist" class="buttonOrange">Edit Device List</a>	
+					<br>
+					<br>
+					<br>
+				</td>
+			</tr>
+		</table>
+	</center>
+</body>
+</div>
+</html>
